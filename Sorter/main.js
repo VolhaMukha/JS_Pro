@@ -1,11 +1,28 @@
-class Sorter {
-    constructor(arr) {
+function Parent() {
+    this.valueOf = function() {
+        return this.arr.length;
+    };
+    this.toString = function() {
+        return "Sorter";
+    };
+}
+
+Object.defineProperty(Parent, "toString", {
+    enumerable: false,
+});
+Object.defineProperty(Parent, "valueOf", {
+    enumerable: false,
+});
+
+class Sorter extends Parent{
+    constructor (arr) {
+        super();
         this.arr = arr;
     }
 
     add(elem) {
-        this.arr = [...this.arr, elem];
-        // arr.push(elem);
+        //this.arr = [...this.arr, elem];
+         this.arr.push(elem);
         return this.arr.length;
     }
 
@@ -24,7 +41,6 @@ class Sorter {
         return this.arr;
     }
 
-
     map(callbackFunc) {
         let new_arr = [];
         for (let i=0; i < this.arr.length; i++) {
@@ -32,8 +48,6 @@ class Sorter {
         }
         return new_arr;
     }
-
-
 
     filter(callbackFunc) {
         let filter_arr = [];
@@ -49,6 +63,37 @@ class Sorter {
         return this.arr.push(...addArr);
     }
 }
+
+class Fibonacci extends Sorter{
+  getArr () {
+     var arrCurrent = this.arr,
+         newarr =[];
+
+     function isSquare(n) {
+       return n > 0 && Math.sqrt(n) % 1 === 0;
+     };
+
+     function isFibonacci(num) {
+       return isSquare(5 * num * num + 4) ||
+              isSquare(5 * num * num - 4);
+     }
+     function getFibonacci(arr, newarr) {
+       if (arr.length == 0) {
+         return true;
+       }
+       if (isFibonacci(arr[0])) {
+         newarr.push(arr[0]);
+       };
+       arrCurrent.splice(0, 1);
+       getFibonacci(arrCurrent, newarr);
+         return true;
+       }
+       getFibonacci(arrCurrent,newarr);
+       return newarr;
+  }
+}
+
+
 let baseArr = new Sorter (['pen', 'book', '123', 10, true]);
 
 const elem1 = 7, elem2 = 'chair';
@@ -67,7 +112,19 @@ console.log(`Map method. New_arr: ${map_arr}`);
 let filter_arr = baseArr.filter(elem => elem.length > 3);
 console.log(`Filter method. Filter_arr: ${filter_arr}`);
 
-
 let addArray = [3,16,'new'];
 baseArr.pushArray(addArray);
 console.log(`Push method. Arr: ${baseArr}`);
+
+//Parent
+console.log(baseArr.toString());
+console.log(baseArr.valueOf());
+
+//Fibonacci
+let p = new Fibonacci([5,1,0,67,1,13,0,69,34]);
+let arrFibo = p.getArr();
+console.log(`From fibonacci sequince: ${arrFibo}`);
+
+
+
+
