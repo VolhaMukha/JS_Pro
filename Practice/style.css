@@ -1,0 +1,11 @@
+main {
+    display: flex;
+    margin-top: 20px;
+}
+.list {
+    display: block;
+    /*border: 1px solid black;*/
+    box-sizing: border-box;
+    width: 500px;
+    height: 100%;
+}
